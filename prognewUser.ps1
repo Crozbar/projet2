@@ -12,7 +12,12 @@ Clear-Host
 # Importation du fichier CSV
 $CSVPath = "utilisateurs.csv"
 
-$Userliste = Import-Csv -Path $CSVPath -Delimiter ";"
+if (test-path $CSVPath){
+	$Userliste = Import-Csv -Path $CSVPath -Delimiter ";"
+	}else {
+		write-Warning "La destination du fichier .csv est invalide!"
+		exit
+		}
 
 $userLISTE | % {$_ | Add-Member -NotePropertyMembers @{ Login = $_."first name".substring(0,1)+$_."LAST NAME"} }
 
