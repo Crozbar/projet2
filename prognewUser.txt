@@ -2,6 +2,7 @@
 #######################################################
 # Jean-Philippe Michaud
 # 6 mai 2022
+# revision: janvier 2023
 #
 # Ce script recupere le contenu d'un fichier CSV
 # Cree des utilisateurs
@@ -9,9 +10,11 @@
 Clear-Host
 
 # Importation du fichier CSV
-$CSVPath = "FORMATION_donnees.CSV"
+$CSVPath = "utilisateurs.csv"
 
 $Userliste = Import-Csv -Path $CSVPath -Delimiter ";"
+
+$userLISTE | % {$_ | Add-Member -NotePropertyMembers @{ Login = $_."first name".substring(0,1)+$_."LAST NAME"} }
 
 $Userliste | % {
   $Nom = $_.LASTNAME
