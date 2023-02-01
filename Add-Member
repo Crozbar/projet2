@@ -3,8 +3,9 @@
 
 #Exemple:
 
-$userListe = import-csv -Path "[fichier.csv]"
+$VAR = import-csv -Path "[fichier.csv]"
 
-$userLISTE | % {$_ | Add-Member -NotePropertyMembers @{ Login = $_."first name".substring(0,1)+$_."LAST NAME"} }
+$VAR | % {$_ | Add-Member -NotePropertyMembers @{ New_Member = Value} }
 
-#On peut ensuite le réexporter, ou continuer à utiliser l'objet custom en powershell
+#Add-Member modifie le CustomObjet en direct de façon itérative
+#On peut ensuite le réexporter, ou continuer à utiliser en powershell
