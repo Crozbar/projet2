@@ -1,0 +1,10 @@
+
+#Comment ajouter un membre à un objet
+
+#Exemple:
+
+$userListe = import-csv -Path "[fichier.csv]"
+
+$userLISTE | % {$_ | Add-Member -NotePropertyMembers @{ Login = $_."first name".substring(0,1)+$_."LAST NAME"} }
+
+#On peut ensuite le réexporter, ou continuer à utiliser l'objet custom en powershell
