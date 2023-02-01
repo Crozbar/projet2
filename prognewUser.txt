@@ -14,16 +14,17 @@ $CSVPath = "FORMATION_donnees.CSV"
 $Userliste = Import-Csv -Path $CSVPath -Delimiter ";"
 
 $Userliste | % {
-  $Nom = $_.Nom
-  $Prenom = $_.Prenom
+  $Nom = $_.LASTNAME
+  $Prenom = $_.FIRSTNAME
   $Code = $_.Code
   $Login = $_.Login
-  $Parent = $_.Parent
+  $Parent = $_.DEPARTEMENT
+  $motdepasse = $_.motdepasse
 
 #Format des variables ADUser
 #Domaine
 #$Parent on garde tel quel
-$nomDNS = "formation.local"
+$nomDNS = "projet2.local"
 
 #User
 $loginName = "$Login"
@@ -35,7 +36,7 @@ $noPays   = 124
 # IMPORTANT: création du compte utilisateur
 # Si on ne déclare pas le paramètre -SamAccountName
 # Le contenu de -SamAccountName sera le même que le paramètre -Name
-$mdp = ConvertTo-SecureString -AsPlainText "AAAaaa111" -Force
+$mdp = ConvertTo-SecureString -AsPlainText "$motdepasse" -Force
 
 New-ADUser -Name $loginName `
            -UserPrincipalName "$loginName@$NomDNS" `
