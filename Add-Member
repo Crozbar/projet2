@@ -3,7 +3,7 @@
 
 #Exemple:
 
-$VAR = import-csv -Path "[fichier.csv]"
+[pscustomobject]$VAR = @{}
 
 $VAR | % {$_ | Add-Member -NotePropertyMembers @{ New_Member = Value} }
 
