@@ -1,0 +1,56 @@
+
+#######################################################
+# Jean-Philippe Michaud
+# 6 mai 2022
+#
+# Ce script recupere le contenu d'un fichier CSV
+# Cree des utilisateurs
+#######################################################
+Clear-Host
+
+# Importation du fichier CSV
+$CSVPath = "FORMATION_donnees.CSV"
+
+$Userliste = Import-Csv -Path $CSVPath -Delimiter ";"
+
+$Userliste | % {
+  $Nom = $_.Nom
+  $Prenom = $_.Prenom
+  $Code = $_.Code
+  $Login = $_.Login
+  $Parent = $_.Parent
+
+#Format des variables ADUser
+#Domaine
+#$Parent on garde tel quel
+$nomDNS = "formation.local"
+
+#User
+$loginName = "$Login"
+
+$codePays = "CA"
+$nomPays  = "Canada"
+$noPays   = 124
+
+# IMPORTANT: création du compte utilisateur
+# Si on ne déclare pas le paramètre -SamAccountName
+# Le contenu de -SamAccountName sera le même que le paramètre -Name
+$mdp = ConvertTo-SecureString -AsPlainText "AAAaaa111" -Force
+
+New-ADUser -Name $loginName `
+           -UserPrincipalName "$loginName@$NomDNS" `
+           -Path $Parent `
+           -GivenName $Prenom `
+           -Surname $Nom `
+           -office $Code `
+           -DisplayName "$Prenom $Nom - $Code" `
+           -OtherAttributes @{'c'=$codePays;'co'=$nomPays;'countryCode'=$noPays;}  `
+           -AccountPassword $mdp `
+           -PasswordNeverExpires $true `
+           -Enabled $true
+
+$message = "Fin de la création du compte utilisateur $loginName"
+Write-Host $message -ForegroundColor Yellow
+
+}
+
