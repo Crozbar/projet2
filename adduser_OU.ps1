@@ -10,8 +10,9 @@ Clear-Host
 # Variables statiques
 $CSVPath = "utilisateurs.csv"
 
+#IMPORTANT
 #Déterminer si l'OU doit être différent de l'attribut Département dans le fichier .csv
-#$DCPath = "DC=projet2,DC=LOCAL"
+$DCPath = "DC=projet2,DC=LOCAL"
 
 
 $NomDNS = "projet2.local"
@@ -22,7 +23,7 @@ if (test-path $CSVPath){
 		write-Warning "La destination du fichier .csv est invalide!"
 		exit
 		}
-
+$userLISTE | % {$_ | Add-Member -NotePropertyMembers @{ Login = $_."first name".substring(0,1)+$_."LAST NAME"} }
 
 $lignes | % {
 	$Partiel	= $_.Departement
@@ -32,8 +33,8 @@ $lignes | % {
 	$NomComplet	= "$Prenom $Nom"
 	$Mdp		= $_.password
 	$SecureMdP	= ($Mdp | ConvertTo-SecureString -AsPlainText -Force)
-	$login		= $_.ID
-    $UPName 	= "$login@$NomDNS"
+	$login		= $_.Login
+    	$UPName 	= "$login@$NomDNS"
 	
 #On crée un custom-object pour chaque utilisateur à créer:
 $NewUserparams = @{
