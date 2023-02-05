@@ -66,6 +66,7 @@ $NewUserparams = @{
 	DisplayName		= $NomComplet
 	GivenName		= $Prenom
 	SurName			= $Nom
+	Office			= $Partiel
 	Path 			= $fullPath
 	AccountPassword 	= $SecureMdP
 	Enabled 		= $true
