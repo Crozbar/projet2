@@ -5,7 +5,7 @@
 # Ce script récupère le contenu d'un fichier CSV
 # On crée des unité organisationelles en fonction du nom des départements
 # On crée des groupes en fonction du nom des départements
-# On crée des utilisateurs et les situe dans leur OU respectif
+# On crée des utilisateurs et les situe dans leur OU respective
 # On ajoute les utilisateurs à leur groupe respectif
 #--------------------------------------------------
 Clear-Host
