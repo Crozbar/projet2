@@ -2,13 +2,19 @@
  ###  Création des répertoires partagés  ###
  ###########################################
 
-Il doit exister un répertoire partagé par département
-Chaque employé doit aussi avoir un disque réseau dans un partage SMB
- 
+Ce code crée des répertoires et des partages réseau pour les départements et les employés d'une organisation.
+Il lit un fichier CSV nommé "utilisateurs.csv" pour obtenir les noms des départements, en utilisant la commande "import-csv" et en filtrant les valeurs uniques de la colonne "département".
+Ensuite, pour chaque département dans la liste, le code crée un répertoire nommé d'après le département sous "C:\partage\Departements".
+Le propriétaire et les autorisations du répertoire sont définis en utilisant les commandes "set-NTFSOwner" et "Add-NTFSAccess".
+Finalement, le répertoire est partagé en utilisant la commande "New-SmbShare".
+Pour chaque employé, le code crée un répertoire sous "C:\partage\Employes", définit le propriétaire et les autorisations, puis partage le répertoire en utilisant les mêmes commandes que pour les départements.
+La description du partage est définie en utilisant le nom d'affichage de l'utilisateur obtenu à l'aide de la commande "Get-ADUser".
+
+
+N.B. 	1. Il est important de vérifier que les noms d'utilisateur et de département sont exacts et correspondent aux noms utilisés dans l'Active Directory.
+		2. De plus, vous devriez vous assurer que les chemins de répertoire existent et ont les autorisations appropriées.
+		3. Ce script utilise le module ntfssecurity.
 #>
-
-# N.B. Ce script utilise le module ntfssecurity
-
 
 
 $Departements=(import-csv -path utilisateurs.csv -delimiter ';').departement | Select-Object -Unique
@@ -57,7 +63,7 @@ $displayname=(get-aduser -identity $utilisateur -properties *).displayname
 
 #Partage des répertoires utilisateurs
 
-$Parametres_utilisateurs = @{
+	$Parametres_utilisateurs = @{
 	    Name = "$Utilisateur"
 	    Path = "C:\partage\Employes\$Utilisateur"
 	    FullAccess = "projet2\Administrateur", "projet2\$utilisateur"
