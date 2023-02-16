@@ -41,7 +41,7 @@ foreach ($Departement in $Departements) {
 
 #Création des partages pour chaque utilisateurs
 
-#On veux seulement la liste des employés
+#On veut seulement la liste des employés
 #On partira donc de la liste de départements qu'on a utilisé précédemment,
 #et on l'insère dans le distinguishedname de l'objet Active directory
 
