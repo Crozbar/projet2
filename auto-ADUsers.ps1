@@ -10,19 +10,12 @@
 #--------------------------------------------------
 Clear-Host
 
-#total d'utilisateurs
+#Décompte d'utilisateurs
 $total=0
 
 # Variables statiques
 $CSVPath = "utilisateurs.csv"
-
-#IMPORTANT
-#Déterminer si l'OU doit être différent de l'attribut Département dans le fichier .csv
 $DCPath = "DC=projet2,DC=LOCAL"
-$codePays = "CA"
-$nomPays  = "Canada"
-$noPays   = 124
-
 $NomDNS = "projet2.local"
 
 if (test-path $CSVPath){
@@ -55,7 +48,7 @@ $userListe | % {
 	$Mdp		= $_.Password
 	$SecureMdP	= ($Mdp | ConvertTo-SecureString -AsPlainText -Force)
 	$userlogin	= $_.Login
-    $UPName 	= "$userlogin@projet2"
+    	$UPName 	= "$userlogin@projet2"
 	
 #On crée un custom-object qui assigne chaque paramètre pour l'utilisateur à créer:
 
@@ -71,7 +64,6 @@ $NewUserparams = @{
 	AccountPassword 	= $SecureMdP
 	Enabled 		= $true
 	PasswordNeverExpires 	= $true
-#	Ajouter les  OtherAttributes @{'c'=$codePays;'co'=$nomPays;'countryCode'=$noPays;}
 	}
 
 #	On crée l'utilisateur, puis on le rend membre du groupe approprié
