@@ -1,0 +1,37 @@
+---
+- hosts: ServeurWeb
+  tasks:
+    - name: Activation de selinux
+      # le module utilisé
+      lineinfile:
+        # spécifie le chemin du fichier à modifier
+        path: /etc/selinux/config
+        # Modifiera la ligne correspondant à l'expression régulière suivante
+        regexp: '^SELINUX='
+        # Comment sera modifié la ligne
+        line: SELINUX=enforcing
+    - name: mise a jour du service Apache
+      dnf:
+        name: httpd
+        state: latest
+    - name: Demarrer le service httpd
+      service:
+        name: httpd
+        enabled: yes
+        state: started
+    - name: Copie fichier local index.html vers le serveur web distant
+      copy:
+        src: "/root/playbooks/index.html"
+        dest: "/var/www/html/index.html"
+        owner: "root"
+        group: "root"
+        mode: '644'
+        checksum: "092db8c933edf0e8f91140ab4a0b4811177c4cce"
+    - name: Copie la variable IP dans index.html
+      lineinfile:
+        path: "/var/www/html/index.html"
+        state: present
+        regexp: "[IP]"
+        line: "{{ ansible_default_ipv4.address }}"
+
+...
