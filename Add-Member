@@ -1,11 +1,10 @@
 
-#Comment ajouter un membre à un objet
+#Rappel: Comment ajouter un membre à un objet powershell
 
 #Exemple:
 
 [pscustomobject]$VAR = @{}
 
-$VAR | % {$_ | Add-Member -NotePropertyMembers @{ New_Member = Value} }
+$VAR | % { $_ | Add-Member -NotePropertyMembers @{ New_Member = Value} }
 
-#Add-Member modifie le CustomObjet en direct de façon itérative
-#On peut ensuite le réexporter, ou continuer à utiliser en powershell
+#Add-Member modifie le CustomObjet directement, de façon itérative.
