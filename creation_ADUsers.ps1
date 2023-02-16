@@ -33,7 +33,14 @@ if (test-path $CSVPath){
 #En boucle, on crée une OU et un groupe du même nom
 foreach ($OU in $listeOU) {
 	New-ADOrganizationalUnit -Name $OU -Path $DCPath -ProtectedFromAccidentalDeletion $False
-	New-ADGroup -Name "$OU" -SamAccountName "$OU" -GroupCategory "distribution" -GroupScope Global -DisplayName "$OU" -Path "CN=Users,DC=projet2,DC=local" -Description "Les membres de ce groupe travaillent dans le département  $OU"
+	New-ADGroup `
+	-Name "$OU" `
+	-SamAccountName "$OU" `
+	-GroupCategory "distribution" `
+	-GroupScope Global `
+	-DisplayName "$OU" `
+	-Path "CN=Users,DC=projet2,DC=local" `
+	-Description "Les membres de ce groupe travaillent dans le département  $OU"
 }
 
 #Création des logins utilisateurs
