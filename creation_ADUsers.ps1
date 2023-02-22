@@ -36,7 +36,7 @@ foreach ($OU in $listeOU) {
 	New-ADGroup `
 	-Name "$OU" `
 	-SamAccountName "$OU" `
-	-GroupCategory "distribution" `
+	-GroupCategory "security" `
 	-GroupScope Global `
 	-DisplayName "$OU" `
 	-Path "CN=Users,DC=projet2,DC=local" `
